@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id('id_admin');
-            $table->string('email_admin')->unique();
-            $table->string('mdp_admin');
+        Schema::create('feedback', function (Blueprint $table) {
+            $table->id('id_fb');
+            $table->foreignId('id_client')->constrained('users');
+            $table->text('description_fb');
+            $table->integer('evaluation_fb');
+            $table->string('titre_fb');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('feedback');
     }
 };

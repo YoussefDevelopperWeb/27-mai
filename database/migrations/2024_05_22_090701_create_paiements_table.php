@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id('id_admin');
-            $table->string('email_admin')->unique();
-            $table->string('mdp_admin');
+        Schema::create('paiements', function (Blueprint $table) {
+            $table->id('id_pay');
+            $table->foreignId('id_commande')->constrained('commandes');
+            $table->decimal('montant', 8, 2);
+            $table->date('dateP');
+            $table->string('methode');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('paiements');
     }
 };

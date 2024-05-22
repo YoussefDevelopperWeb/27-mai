@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
-            $table->id('id_admin');
-            $table->string('email_admin')->unique();
-            $table->string('mdp_admin');
+        Schema::create('paniers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('id_produit')->constrained('produits');
+            $table->integer("qtt_produit");
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('paniers');
     }
 };
