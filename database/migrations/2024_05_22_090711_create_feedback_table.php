@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('feedback', function (Blueprint $table) {
-            $table->id('id_fb');
+            $table->id();
             $table->foreignId('id_client')->constrained('users');
             $table->text('description_fb');
             $table->integer('evaluation_fb');

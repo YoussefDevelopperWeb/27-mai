@@ -12,7 +12,7 @@ class PaiementController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Paiement::all(), 200);
     }
 
     /**
@@ -20,30 +20,65 @@ class PaiementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_commande' => 'required|exists:commandes,id',
+            'montant' => 'required|numeric',
+            'dateP' => 'required|date',
+            'methode' => 'required|string|max:255',
+        ]);
+
+        $paiement = Paiement::create($request->all());
+        return response()->json($paiement, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Paiement $paiement)
+    public function show($id)
     {
-        //
+        $paiement = Paiement::find($id);
+
+        if (is_null($paiement)) {
+            return response()->json(['message' => 'Paiement not found'], 404);
+        }
+
+        return response()->json($paiement, 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Paiement $paiement)
+    public function update(Request $request, $id)
     {
-        //
+        $paiement = Paiement::find($id);
+
+        if (is_null($paiement)) {
+            return response()->json(['message' => 'Paiement not found'], 404);
+        }
+
+        $request->validate([
+            'id_commande' => 'exists:commandes,id',
+            'montant' => 'numeric',
+            'dateP' => 'date',
+            'methode' => 'string|max:255',
+        ]);
+
+        $paiement->update($request->all());
+        return response()->json($paiement, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Paiement $paiement)
+    public function destroy($id)
     {
-        //
+        $paiement = Paiement::find($id);
+
+        if (is_null($paiement)) {
+            return response()->json(['message' => 'Paiement not found'], 404);
+        }
+
+        $paiement->delete();
+        return response()->json(null, 204);
     }
 }

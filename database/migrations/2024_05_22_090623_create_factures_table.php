@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('factures', function (Blueprint $table) {
-            $table->id('id_facture');
+            $table->id();
             $table->foreignId('id_commande')->constrained('commandes');
             $table->date('date_facture');
             $table->string('nom_facture');
