@@ -8,28 +8,28 @@ const ProductCard = ({ data }) => {
     const [click, setClick] = useState(false);
     const [open, setOpen] = useState(false);
 
-    const d = data.name;
+    const d = data.nom_produit;
     const product_name = d.replace(/\s+/g, "-");
 
-//   console.log("hello",data)
+    console.log("hello",data)
 
     return (
         <>
         <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
             <div className="flex justify-end"></div>
-            {/* <Link to={`/product/${product_name}`}> */}
+            <Link to={`/product/${product_name}`}>
             <img
                 src={data.image_produit}
-                alt=""
+                alt="image"
                 className="w-full h-[170px] object-contain"
             />
-            {/* </Link> */}
-            <Link to="/">
-            <h5 className={`${styles.shop_name}`}>{data.shop.name}</h5>
             </Link>
-            {/* <Link to={`/product/${product_name}`}> */}
+            <Link to="/">
+            <h5 className={`${styles.shop_name}`}>{data.nom_produit}</h5>
+            </Link>
+            <Link to={`/product/${product_name}`}>
             <h4 className="pb-3 font-[500]">
-                {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
+                {data.nom_produit.length > 40 ? data.nom_produit.slice(0, 40) + "..." : data.nom_produit}
             </h4>
 
             <div className="flex">
@@ -63,17 +63,17 @@ const ProductCard = ({ data }) => {
             <div className="py-2 flex items-center justify-between">
                 <div className="flex">
                 <h5 className={`${styles.productDiscountPrice}`}>
-                    {data.price === 0 ? data.price : data.discount_price}$
+                    {data.prix_produit === 0 ? data.prix_produit : data.prix_produit}$
                 </h5>
                 <h4 className={`${styles.price}`}>
-                    {data.price ? data.price + " $" : null}
+                    {data.prix_produit ? data.prix_produit + " $" : null}
                 </h4>
                 </div>
                 <span className="font-[400] text-[17px] text-[#68d284]">
-                {data.total_sell} sold
+                100 sold
                 </span>
             </div>
-            {/* </Link> */}
+            </Link>
 
 
             {/* side options */}

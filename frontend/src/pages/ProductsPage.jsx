@@ -10,38 +10,52 @@ import { useStateContext } from "../Contexts/ContextProvider";
 const ProductsPage = () => {
     const [searchParams] = useSearchParams();
     const categoryData = searchParams.get("category");
-    const [data, setData] = useState([]);
-    const {products} = useStateContext();
+    const [prData, setPrData] = useState([]);
+    const {products, categories} = useStateContext();
 
-    useEffect(() => {
+    useEffect( _ => {
 
 // console.log("produits", products)
 
-    if (categoryData === null) {
-        const d =
-        productData && productData.sort((a, b) => a.total_sell - b.total_sell);
-        setData(d);
-        console.log("hello", d);
-    } else {
-        console.log("yooo", categoryData);
-      const d =
-        productData && productData.filter((i) => i.category === categoryData);
-      setData(d);
-    }
+    // if (categoryData === null) {
+
+    //     const d =
+    //     productData && productData.sort((a, b) => a.total_sell - b.total_sell);
+    //     setData(d);
+
+    // } else {
+
+    //     setData(products)
+    //     const d =
+    //     productData && productData.filter((i) => i.category === categoryData);
+    //     setData(d);
+
+    // }
     //    window.scrollTo(0,0);
 
 
-        // if (categoryData === null) {
-        //     setData(products)
-        // } else {
-        //     const d =
-        //     productData && productData.filter((i) => i.category === categoryData);
-        //     setData(d);
-        // }
-        // console.log("yooo", data)
-        // console.log("hooo", data)
+        if (categoryData === null) {
 
-    }, [products]);
+            setPrData(products);
+
+        } else {
+            // console.log("products", products)
+            // console.log("categories", categories)
+            // console.log("categoryData", categoryData)
+
+            const cat = categories.find(c => c.nom_cat === categoryData);
+            if (cat) {
+                const filteredProducts = products.filter(i => i.id_cat === cat.id);
+                setPrData(filteredProducts);
+            } else {
+                setPrData([]);
+            }
+        }
+
+    }, [categoryData, products, categories]);
+
+    console.log("prdata1", prData)
+
 
     return (
         <div>
@@ -50,9 +64,10 @@ const ProductsPage = () => {
         <br />
         <div className={`${styles.section}`}>
             <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
-            {data && data.map((i, index) => <ProductCard data={i} key={index} />)}
+            {prData && prData.map((i, index) => <ProductCard data={i} key={index} />)}
+
             </div>
-            {data && data.length === 0 && (
+            {prData && prData.length === 0 && (
             <h1 className="text-center w-full pb-[100px] text-[20px]">
                 No products Found!
             </h1>
