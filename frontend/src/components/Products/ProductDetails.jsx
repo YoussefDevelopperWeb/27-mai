@@ -36,7 +36,7 @@ const ProductDetails = ({ data }) => {
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
                 <img
-                  src={data.image_Url[select].url}
+                  src={data.image_produit}
                   alt=""
                   className="w-[80%]"
                 />
@@ -47,7 +47,7 @@ const ProductDetails = ({ data }) => {
                     } cursor-pointer`}
                   >
                     <img
-                      src={data?.image_Url[0].url}
+                      src={data?.image_produit}
                       alt=""
                       className="h-[200px]"
                       onClick={() => setSelect(0)}
@@ -59,7 +59,7 @@ const ProductDetails = ({ data }) => {
                     } cursor-pointer`}
                   >
                     <img
-                      src={data?.image_Url[1].url}
+                      src={data?.image_Produit}
                       alt=""
                       className="h-[200px]"
                       onClick={() => setSelect(1)}
@@ -68,14 +68,14 @@ const ProductDetails = ({ data }) => {
                 </div>
               </div>
               <div className="w-full 800px:w-[50%] pt-5">
-                <h1 className={`${styles.productTitle}`}>{data.name}</h1>
-                <p>{data.description}</p>
+                <h1 className={`${styles.productTitle}`}>{data.nom_produit}</h1>
+                <p>{data.description_produit}</p>
                 <div className="flex pt-3">
                   <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discount_price}$
+                    {data.prix_produit}$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.price ? data.price + "$" : null}
+                    {data.prix_produit ? data.prix_produit + "$" : null}
                   </h3>
                 </div>
 
@@ -126,16 +126,16 @@ const ProductDetails = ({ data }) => {
                 </div>
                 <div className="flex items-center pt-8">
                   <img
-                    src={data.shop.shop_avatar.url}
-                    alt=""
+                    src=""/* {data.shop.shop_avatar.url} */
+                    alt="image"
                     className="w-[50px] h-[50px] rounded-full mr-2"
                   />
                   <div className="pr-8">
                     <h3 className={`${styles.shop_name} pb-1 pt-1`}>
-                      {data.shop.name}
+                      {data.nom_produit}
                     </h3>
                     <h5 className="pb-3 text-[15px]">
-                      ({data.shop.ratings}) Ratings
+                      ({/* {data.shop.ratings} */} 3.5) Ratings
                     </h5>
                   </div>
                   <div

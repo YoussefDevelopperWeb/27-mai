@@ -33,7 +33,7 @@ const ContextProvider = ({children}) => {
         getProducts();
     }, [])
 
-    console.log("provider", products)
+    // console.log("provider", products)
 
     const setNotification = message => {
         _setNotification(message)

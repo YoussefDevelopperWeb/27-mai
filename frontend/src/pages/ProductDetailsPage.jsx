@@ -5,24 +5,31 @@ import Header from '../components/Layout/Header'
 import ProductDetails from "../components/Products/ProductDetails";
 import { productData } from '../static/data';
 import SuggestedProduct from "../components/Products/SuggestedProduct";
+import { useStateContext } from '../Contexts/ContextProvider';
 
 const ProductDetailsPage = () => {
     const {name} = useParams();
-    const [data,setData] = useState(null);
+    const [prData,setPrData] = useState(null);
     const productName = name.replace(/-/g," ");
+    const {products} = useStateContext();
+
+    // console.log(productName)
+    // console.log(products)
 
     useEffect(() => {
-        const data = productData.find((i) => i.name === productName);
-        setData(data);
-    }, [])
-    
+        const data = products.find(ele => ele.nom_produit === productName);
+        setPrData(data);
+    }, [products])
+
+    console.log("datahh", prData)
+
   return (
     <div>
         <Header />
-        <ProductDetails data={data} />
-         {
-            data && <SuggestedProduct data={data} />
-         }
+        <ProductDetails data={prData} />
+         {/* {
+            prData && <SuggestedProduct data={prData} />
+         } */}
         <Footer />
     </div>
   )

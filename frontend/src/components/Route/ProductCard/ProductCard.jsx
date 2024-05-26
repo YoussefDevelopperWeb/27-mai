@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styles from "../../../styles/styles";
@@ -7,11 +7,14 @@ import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 const ProductCard = ({ data }) => {
     const [click, setClick] = useState(false);
     const [open, setOpen] = useState(false);
+    // const [product_name, setProduct_name] = useState("");
+    useEffect(_ => {
+    }, [])
 
     const d = data.nom_produit;
     const product_name = d.replace(/\s+/g, "-");
 
-    console.log("hello",data)
+    console.log("hello", product_name)
 
     return (
         <>
@@ -29,7 +32,7 @@ const ProductCard = ({ data }) => {
             </Link>
             <Link to={`/product/${product_name}`}>
             <h4 className="pb-3 font-[500]">
-                {data.nom_produit.length > 40 ? data.nom_produit.slice(0, 40) + "..." : data.nom_produit}
+                {data.nom_produit && data.nom_produit.length > 40 ? data.nom_produit.slice(0, 40) + "..." : data.nom_produit}
             </h4>
 
             <div className="flex">

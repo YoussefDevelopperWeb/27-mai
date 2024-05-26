@@ -38,17 +38,17 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
             <div className="block w-full 800px:flex">
               <div className="w-full 800px:w-[50%]">
-                <img src={data.image_Url[0].url} alt="" />
+                <img src={data.image_produit} alt="image" />
                 <div className="flex">
                   <img
-                    src={data.shop.shop_avatar.url}
-                    alt=""
+                    src="hello"/* {data.shop.shop_avatar.url} */
+                    alt="image"
                     className="w-[50px] h-[50px] rounded-full mr-2"
                   />
                   <div>
-                    <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
+                    <h3 className={`${styles.shop_name}`}>{data.nom_produit}</h3>
                     <h5 className="pb-3 text-[15px]">
-                      ({data.shop.ratings}) Ratings
+                      ({/* {data.shop.ratings} */}4.5) Ratings
                     </h5>
                   </div>
                 </div>
@@ -61,22 +61,22 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   </span>
                 </div>
                 <h5 className="text-[16px] text-[red] mt-5">
-                  ({data.total_sell}) Sold out
+                  ({/* {data.total_sell} */}100) Sold out
                 </h5>
               </div>
 
               <div className="w-full 800px:w-[50%] pt-5 pl-[5px] pr-[5px]">
                 <h1 className={`${styles.productTitle} text-[20px]`}>
-                  {data.name}
+                  {data.nom_produit}
                 </h1>
-                <p>{data.description}</p>
+                <p>{data.description_produit}</p>
 
                 <div className="flex pt-3">
                   <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discount_price}$
+                    {/* {data.discount_price} */}10$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.price ? data.price + "$" : null}
+                    {data.prix_produit ? data.prix_produit + "$" : null}
                   </h3>
                 </div>
                 <div className="flex items-center mt-12 justify-between pr-3">
@@ -128,7 +128,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : "null"}
     </div>
   );
 };
