@@ -26,7 +26,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
 const App = () => {
+
   const { loading, isAuthenticated } = useSelector((state) => state.user);
+
   return (
     <>
       {loading  ? null : (
@@ -48,9 +50,13 @@ const App = () => {
             <Route
               path="/checkout"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+
+
+                // <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <CheckoutPage />
-                </ProtectedRoute>
+                // </ProtectedRoute>
+
+
               }
             />
             <Route path="/payment" element={<PaymentPage />} />
