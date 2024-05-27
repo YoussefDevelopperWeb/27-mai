@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineHeart,
@@ -7,26 +7,42 @@ import {
 } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/styles";
+import axiosClient from "../../axios-client";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
 const ProductDetails = ({ data }) => {
-  const [count, setCount] = useState(1);
-  const [click, setClick] = useState(false);
-  const [select, setSelect] = useState(0);
-  const navigate = useNavigate();
+    const [count, setCount] = useState(1);
+    const [click, setClick] = useState(false);
+    const [select, setSelect] = useState(0);
+    const navigate = useNavigate();
+    const {panier} = useStateContext();
 
-  const incrementCount = () => {
-    setCount(count + 1);
-  };
+    const incrementCount = () => {
+        setCount(count + 1);
+    };
 
-  const decrementCount = () => {
-    if (count > 1) {
-      setCount(count - 1);
+    const decrementCount = () => {
+        if (count > 1) {
+        setCount(count - 1);
+        }
+    };
+
+    const handleMessageSubmit = () => {
+        navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
+    };
+
+    const ajPanier = _ => {
+
+        axiosClient.post('/paniers', {id_produit: data.id, qtt_produit: count})
+        .then(_ =>{
+            console.log("added to card");
+        })
+        .catch(err => console.error( err))
     }
-  };
 
-  const handleMessageSubmit = () => {
-    navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
-  };
+    useEffect(_=> {
+        console.log("panier", panier)
+    },[panier])
 
   return (
     <div className="bg-white">
@@ -108,7 +124,7 @@ const ProductDetails = ({ data }) => {
                       />
                     ) : (
                       <AiOutlineHeart
-                        size={30}
+                        size={35}
                         className="cursor-pointer"
                         onClick={() => setClick(!click)}
                         color={click ? "red" : "#333"}
@@ -117,13 +133,18 @@ const ProductDetails = ({ data }) => {
                     )}
                   </div>
                 </div>
+
+
                 <div
-                  className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
+                    className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
+                    onClick={ajPanier}
                 >
                   <span className="text-white flex items-center">
                     Add to cart <AiOutlineShoppingCart className="ml-1" />
                   </span>
                 </div>
+
+
                 <div className="flex items-center pt-8">
                   <img
                     src=""/* {data.shop.shop_avatar.url} */

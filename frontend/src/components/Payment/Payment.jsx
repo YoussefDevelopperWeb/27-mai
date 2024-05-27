@@ -115,7 +115,7 @@ const PaymentInfo = () => {
           </div>
         ) : null}
       </div>
-       
+
        <br />
       {/* cash on delivery */}
       <div>
