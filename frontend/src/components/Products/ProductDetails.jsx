@@ -15,7 +15,8 @@ const ProductDetails = ({ data }) => {
     const [click, setClick] = useState(false);
     const [select, setSelect] = useState(0);
     const navigate = useNavigate();
-    const {panier} = useStateContext();
+    const {panier, getPanier} = useStateContext();
+    const [loading, setLoading] = useState(false);
 
     const incrementCount = () => {
         setCount(count + 1);
@@ -33,19 +34,35 @@ const ProductDetails = ({ data }) => {
 
     const ajPanier = _ => {
 
+        setLoading(true)
         axiosClient.post('/paniers', {id_produit: data.id, qtt_produit: count})
         .then(_ =>{
             console.log("added to card");
+            setLoading(false);
         })
         .catch(err => console.error( err))
+        // setTimeout(() => {
+        // }, 5000);
     }
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //       setLoading(false);
+    //     }, 5000);
+    //   }, [loading]);
+
     useEffect(_=> {
-        console.log("panier", panier)
+        getPanier()
+        getPanier()
     },[panier])
 
   return (
     <div className="bg-white">
+        {loading &&
+             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+             <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+           </div>
+        }
       {data ? (
         <div className={`${styles.section} w-[90%] 800px:w-[80%]`}>
           <div className="w-full py-5">
@@ -91,7 +108,7 @@ const ProductDetails = ({ data }) => {
                     {data.prix_produit}$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.prix_produit ? data.prix_produit + "$" : null}
+                    {data.prix_produit ? data.prix_produit * 1.5 + "$" : null}
                   </h3>
                 </div>
 

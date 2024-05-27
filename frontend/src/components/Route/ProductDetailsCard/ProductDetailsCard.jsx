@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineHeart,
@@ -7,11 +7,14 @@ import {
 } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../../styles/styles";
+import axiosClient from "../../../axios-client";
+import { useStateContext } from "../../../Contexts/ContextProvider";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
 //   const [select, setSelect] = useState(false);
+    const [loading, setLoading] = useState(false);
 
   const handleMessageSubmit = () => {};
 
@@ -25,8 +28,29 @@ const ProductDetailsCard = ({ setOpen, data }) => {
     setCount(count + 1);
   };
 
+  const {panier, getPanier} = useStateContext();
+
+
+  const ajPanier = _ => {
+    setLoading(true)
+    axiosClient.post('/paniers', {id_produit: data.id, qtt_produit: count})
+    .then(_ =>{
+        getPanier()
+        getPanier()
+        setLoading(false)
+    })
+    .catch(err => console.error( err))
+}
+
+// useEffect(_=> {
+// },[panier])
+
   return (
     <div className="bg-[#fff]">
+        {loading &&
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+            <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+        </div>}
       {data ? (
         <div className="fixed w-full h-screen top-0 left-0 bg-[#00000030] z-40 flex items-center justify-center">
           <div className="w-[90%] 800px:w-[60%] h-[90vh] overflow-y-scroll 800px:h-[75vh] bg-white rounded-md shadow-sm relative p-4">
@@ -73,10 +97,10 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
                 <div className="flex pt-3">
                   <h4 className={`${styles.productDiscountPrice}`}>
-                    {/* {data.discount_price} */}10$
+                    {/* {data.discount_price} */}{data.prix_produit}$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.prix_produit ? data.prix_produit + "$" : null}
+                    {data.prix_produit ? data.prix_produit * 1.5 + "$" : null}
                   </h3>
                 </div>
                 <div className="flex items-center mt-12 justify-between pr-3">
@@ -117,13 +141,17 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                     )}
                   </div>
                 </div>
+
+
                 <div
                   className={`${styles.button} mt-6 rounded-[4px] h-11 flex items-center`}
+                  onClick={ajPanier}
                 >
                   <span className="text-[#fff] flex items-center">
                     Add to cart <AiOutlineShoppingCart className="ml-1" />
                   </span>
                 </div>
+
               </div>
             </div>
           </div>

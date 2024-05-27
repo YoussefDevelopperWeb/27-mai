@@ -35,7 +35,7 @@ const Cart = ({ setOpenCart }) => {
 
     useEffect(_=> {
         getPanierProduits();
-        getPanier();
+        // getPanier();
     }, [panier])
 
     return (
@@ -86,19 +86,23 @@ const Cart = ({ setOpenCart }) => {
     const CartSingle = ({ total, setTotal, qtt, data }) => {
     const {panier, getPanier} = useStateContext();
     // const qtt = panier.find(ele => ele.id_produit == data.produit)
-    const [value, setValue] = useState(qtt.qtt_produit);
+    const [value, setValue] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const totalPrice = data.prix_produit * value;
 
     useEffect(_=>{
         setTotal(prev => prev + totalPrice)
+        setValue(qtt.qtt_produit)
     },[totalPrice])
 
     const delFromPanier = () => {
+        setLoading(true)
         axiosClient.delete('/paniers/'+ qtt.id)
         .then(_ =>{
             getPanier()
             getPanier()
+            setLoading(false)
             })
         .catch(err => console.error('error : ' + err))
     }
@@ -107,6 +111,10 @@ const Cart = ({ setOpenCart }) => {
     return (
         <div className="border-b p-4">
         <div className="w-full flex items-center">
+            {loading &&
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+                <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+            </div>}
             <div>
             <div
                 className={`bg-[#e44343] border border-[#e4434373] rounded-full w-[25px] h-[25px] ${styles.noramlFlex} justify-center cursor-pointer`}

@@ -97,15 +97,16 @@ const Header = ({ activeHeading }) => {
                         const d = i.nom_produit;
 
                         const Product_name = d.replace(/\s+/g, "-");
+
                         return (
                         <Link to={`/product/${Product_name}`}>
                             <div className="w-full flex items-start-py-3">
                             <img
-                                src={i.image_Url[0].url}
-                                alt=""
+                                src={i.image_produit}
+                                alt="image"
                                 className="w-[40px] h-[40px] mr-[10px]"
                             />
-                            <h1>{i.name}</h1>
+                            <h1>{i.nom_produit}</h1>
                             </div>
                         </Link>
                         );
@@ -151,6 +152,8 @@ const Header = ({ activeHeading }) => {
                 <Navbar active={activeHeading} />
             </div>
 
+
+            {/* fovoris */}
             <div className="flex">
                 <div className={`${styles.noramlFlex}`}>
                 <div
@@ -163,6 +166,8 @@ const Header = ({ activeHeading }) => {
                     </span>
                 </div>
                 </div>
+
+
 
                 <div className={`${styles.noramlFlex}`}>
                 <div
