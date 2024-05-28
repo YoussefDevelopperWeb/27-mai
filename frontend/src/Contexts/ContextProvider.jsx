@@ -8,11 +8,16 @@ const StateContext = createContext({
     notification: null,
     categories: null,
     products: null,
+    panier: null,
+    prix: null,
     setNotification: _ => {},
     setUser: _ => {},
     setToken: _ => {},
     setCategories: _ => {},
     setProducts: _ => {},
+    setPanier: _ => {},
+    getPanier: _ => {},
+    setPrix: _=> {},
 })
 
 const ContextProvider = ({children}) => {
@@ -21,6 +26,8 @@ const ContextProvider = ({children}) => {
     const [notification, _setNotification] = useState('')
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
+    const [panier, setPanier] = useState([]);
+    const [prix, setPrix] = useState(0);
 
 
     const getProducts = () => {
@@ -29,8 +36,15 @@ const ContextProvider = ({children}) => {
         .catch(err => console.error(err))
     }
 
+    const getPanier = () => {
+        axiosClient.get('/paniers')
+        .then(data => setPanier(data.data))
+        .catch(err => console.error(err))
+    }
+
     useEffect(_=>{
         getProducts();
+        getPanier();
     }, [])
 
     // console.log("provider", products)
@@ -59,11 +73,16 @@ const ContextProvider = ({children}) => {
             notification,
             categories,
             products,
+            panier,
+            prix,
             setNotification,
             setUser,
             setToken,
             setCategories,
             setProducts,
+            setPanier,
+            getPanier,
+            setPrix,
         }}>
             {children}
         </StateContext.Provider>

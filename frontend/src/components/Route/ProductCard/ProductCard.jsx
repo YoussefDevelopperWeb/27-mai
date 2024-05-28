@@ -8,8 +8,8 @@ const ProductCard = ({ data }) => {
     const [click, setClick] = useState(false);
     const [open, setOpen] = useState(false);
     // const [product_name, setProduct_name] = useState("");
-    useEffect(_ => {
-    }, [])
+    // useEffect(_ => {
+    // }, [])
 
     const d = data.nom_produit;
     const product_name = d.replace(/\s+/g, "-");

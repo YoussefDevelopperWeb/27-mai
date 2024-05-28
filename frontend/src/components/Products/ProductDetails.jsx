@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineHeart,
@@ -7,29 +7,62 @@ import {
 } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/styles";
+import axiosClient from "../../axios-client";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
 const ProductDetails = ({ data }) => {
-  const [count, setCount] = useState(1);
-  const [click, setClick] = useState(false);
-  const [select, setSelect] = useState(0);
-  const navigate = useNavigate();
+    const [count, setCount] = useState(1);
+    const [click, setClick] = useState(false);
+    const [select, setSelect] = useState(0);
+    const navigate = useNavigate();
+    const {panier, getPanier} = useStateContext();
+    const [loading, setLoading] = useState(false);
 
-  const incrementCount = () => {
-    setCount(count + 1);
-  };
+    const incrementCount = () => {
+        setCount(count + 1);
+    };
 
-  const decrementCount = () => {
-    if (count > 1) {
-      setCount(count - 1);
+    const decrementCount = () => {
+        if (count > 1) {
+        setCount(count - 1);
+        }
+    };
+
+    const handleMessageSubmit = () => {
+        navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
+    };
+
+    const ajPanier = _ => {
+
+        setLoading(true)
+        axiosClient.post('/paniers', {id_produit: data.id, qtt_produit: count})
+        .then(_ =>{
+            console.log("added to card");
+            setLoading(false);
+        })
+        .catch(err => console.error( err))
+        // setTimeout(() => {
+        // }, 5000);
     }
-  };
 
-  const handleMessageSubmit = () => {
-    navigate("/inbox?conversation=507ebjver884ehfdjeriv84");
-  };
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //       setLoading(false);
+    //     }, 5000);
+    //   }, [loading]);
+
+    useEffect(_=> {
+        getPanier()
+        getPanier()
+    },[panier])
 
   return (
     <div className="bg-white">
+        {loading &&
+             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
+             <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+           </div>
+        }
       {data ? (
         <div className={`${styles.section} w-[90%] 800px:w-[80%]`}>
           <div className="w-full py-5">
@@ -75,7 +108,7 @@ const ProductDetails = ({ data }) => {
                     {data.prix_produit}$
                   </h4>
                   <h3 className={`${styles.price}`}>
-                    {data.prix_produit ? data.prix_produit + "$" : null}
+                    {data.prix_produit ? data.prix_produit * 1.5 + "$" : null}
                   </h3>
                 </div>
 
@@ -117,13 +150,18 @@ const ProductDetails = ({ data }) => {
                     )}
                   </div>
                 </div>
+
+
                 <div
-                  className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
+                    className={`${styles.button} !mt-6 !rounded !h-11 flex items-center`}
+                    onClick={ajPanier}
                 >
                   <span className="text-white flex items-center">
                     Add to cart <AiOutlineShoppingCart className="ml-1" />
                   </span>
                 </div>
+
+
                 <div className="flex items-center pt-8">
                   <img
                     src=""/* {data.shop.shop_avatar.url} */

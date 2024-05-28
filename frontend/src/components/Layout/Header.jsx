@@ -29,14 +29,14 @@ const Header = ({ activeHeading }) => {
     const [openCart, setOpenCart] = useState(false);
     const [openWishlist, setOpenWishlist] = useState(false);
     const [open, setOpen] = useState(false);
-    const {categories, setCategories} = useStateContext();
+    const {categories, setCategories, panier, products} = useStateContext();
 
     const handleSearchChange = (e) => {
         const term = e.target.value;
         setSearchTerm(term);
 
-        const filteredProducts = productData.filter((product) =>
-        product.name.toLowerCase().includes(term.toLowerCase())
+        const filteredProducts = products.filter((pro) =>
+        pro.nom_produit.toLowerCase().includes(term.toLowerCase())
         );
         setSearchData(filteredProducts);
     };
@@ -75,6 +75,8 @@ const Header = ({ activeHeading }) => {
                 />
                 </Link>
             </div>
+
+
             {/* search box */}
             <div className="w-[50%] relative">
                 <input
@@ -92,18 +94,19 @@ const Header = ({ activeHeading }) => {
                 <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
                     {searchData &&
                     searchData.map((i, index) => {
-                        const d = i.name;
+                        const d = i.nom_produit;
 
                         const Product_name = d.replace(/\s+/g, "-");
+
                         return (
                         <Link to={`/product/${Product_name}`}>
                             <div className="w-full flex items-start-py-3">
                             <img
-                                src={i.image_Url[0].url}
-                                alt=""
+                                src={i.image_produit}
+                                alt="image"
                                 className="w-[40px] h-[40px] mr-[10px]"
                             />
-                            <h1>{i.name}</h1>
+                            <h1>{i.nom_produit}</h1>
                             </div>
                         </Link>
                         );
@@ -149,6 +152,8 @@ const Header = ({ activeHeading }) => {
                 <Navbar active={activeHeading} />
             </div>
 
+
+            {/* fovoris */}
             <div className="flex">
                 <div className={`${styles.noramlFlex}`}>
                 <div
@@ -162,6 +167,8 @@ const Header = ({ activeHeading }) => {
                 </div>
                 </div>
 
+
+
                 <div className={`${styles.noramlFlex}`}>
                 <div
                     className="relative cursor-pointer mr-[15px]"
@@ -172,7 +179,7 @@ const Header = ({ activeHeading }) => {
                     color="rgb(255 255 255 / 83%)"
                     />
                     <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                    1
+                    {panier.length}
                     </span>
                 </div>
                 </div>

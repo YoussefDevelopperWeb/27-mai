@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../styles/styles";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
 const Payment = () => {
   return (
@@ -115,7 +116,7 @@ const PaymentInfo = () => {
           </div>
         ) : null}
       </div>
-       
+
        <br />
       {/* cash on delivery */}
       <div>
@@ -151,11 +152,13 @@ const PaymentInfo = () => {
   );
 };
 const CartData = () => {
+    const {prix} = useStateContext();
+
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">subtotal:</h3>
-        <h5 className="text-[18px] font-[600]">$2610.00</h5>
+        <h5 className="text-[18px] font-[600]">${prix}</h5>
       </div>
       <br />
       <div className="flex justify-between">
@@ -167,7 +170,7 @@ const CartData = () => {
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
         <h5 className="text-[18px] font-[600]">-</h5>
       </div>
-      <h5 className="text-[18px] font-[600] text-end pt-3">$2610.00</h5>
+      <h5 className="text-[18px] font-[600] text-end pt-3">${prix}</h5>
       <br />
       <form>
         <input

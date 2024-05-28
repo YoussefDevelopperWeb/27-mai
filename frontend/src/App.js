@@ -25,6 +25,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./ProtectedRoute";
+import ContactUs from "./pages/ContactUs.jsx";
 const App = () => {
 
   const { loading, isAuthenticated } = useSelector((state) => state.user);
@@ -47,6 +48,7 @@ const App = () => {
             <Route path="/best-selling" element={<BestSellingPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/faq" element={<FAQPage />} />
+            <Route path="/contact" element={<ContactUs/>} />
             <Route
               path="/checkout"
               element={

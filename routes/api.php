@@ -44,4 +44,3 @@ Route::apiResource('paiements', PaiementController::class);
 Route::apiResource('livraisons', LivraisonController::class);
 Route::apiResource('factures', FactureController::class);
 
-
