@@ -5,7 +5,7 @@ import Header from '../components/Layout/Header'
 const EventsPage = () => {
   return (
     <div>
-        <Header activeHeading={4} />
+        <Header activeHeading={3} />
         <EventCard active={true} />
         <EventCard active={true} />
     </div>

@@ -9,6 +9,7 @@ const StateContext = createContext({
     categories: null,
     products: null,
     panier: null,
+    prix: null,
     setNotification: _ => {},
     setUser: _ => {},
     setToken: _ => {},
@@ -16,6 +17,7 @@ const StateContext = createContext({
     setProducts: _ => {},
     setPanier: _ => {},
     getPanier: _ => {},
+    setPrix: _=> {},
 })
 
 const ContextProvider = ({children}) => {
@@ -25,6 +27,7 @@ const ContextProvider = ({children}) => {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [panier, setPanier] = useState([]);
+    const [prix, setPrix] = useState(0);
 
 
     const getProducts = () => {
@@ -71,6 +74,7 @@ const ContextProvider = ({children}) => {
             categories,
             products,
             panier,
+            prix,
             setNotification,
             setUser,
             setToken,
@@ -78,6 +82,7 @@ const ContextProvider = ({children}) => {
             setProducts,
             setPanier,
             getPanier,
+            setPrix,
         }}>
             {children}
         </StateContext.Provider>

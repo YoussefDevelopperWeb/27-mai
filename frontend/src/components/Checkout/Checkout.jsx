@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../../styles/styles";
 import { Country, State } from "country-state-city";
 import { useNavigate } from "react-router-dom";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -120,11 +121,13 @@ const ShippingInfo = () => {
 };
 
 const CartData = () => {
+    const {prix} = useStateContext();
+
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
       <div className="flex justify-between">
         <h3 className="text-[16px] font-[400] text-[#000000a4]">subtotal:</h3>
-        <h5 className="text-[18px] font-[600]">$2610.00</h5>
+        <h5 className="text-[18px] font-[600]">${prix}</h5>
       </div>
       <br />
       <div className="flex justify-between">
@@ -136,7 +139,7 @@ const CartData = () => {
         <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
         <h5 className="text-[18px] font-[600]">-</h5>
       </div>
-      <h5 className="text-[18px] font-[600] text-end pt-3">$2610.00</h5>
+      <h5 className="text-[18px] font-[600] text-end pt-3">${prix}</h5>
       <br />
       <form>
         <input
