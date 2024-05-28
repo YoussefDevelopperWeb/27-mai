@@ -12,4 +12,9 @@ class Paiement extends Model
     protected $fillable = [
         'id_commande', 'montant', 'dateP', 'methode'
     ];
+
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class, 'id_commande');
+    }
 }

@@ -2,83 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the user's profile form.
      */
-    public function index()
+    public function edit(Request $request): View
     {
-        return response()->json(Profile::all(), 200);
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Update the user's profile information.
      */
-    public function store(Request $request)
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->validate([
-            'id_client' => 'required|exists:users,id',
-            'adresse' => 'required|string|max:255',
-            'ville' => 'required|string|max:255',
-            'cp_client' => 'required|integer',
+        $request->user()->fill($request->validated());
+
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+
+        $request->user()->save();
+
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    }
+
+    /**
+     * Delete the user's account.
+     */
+    public function destroy(Request $request): RedirectResponse
+    {
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
         ]);
 
-        $profile = Profile::create($request->all());
-        return response()->json($profile, 201);
-    }
+        $user = $request->user();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $profile = Profile::find($id);
+        Auth::logout();
 
-        if (is_null($profile)) {
-            return response()->json(['message' => 'Profile not found'], 404);
-        }
+        $user->delete();
 
-        return response()->json($profile, 200);
-    }
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        $profile = Profile::find($id);
-
-        if (is_null($profile)) {
-            return response()->json(['message' => 'Profile not found'], 404);
-        }
-
-        $request->validate([
-            'id_client' => 'exists:users,id',
-            'adresse' => 'string|max:255',
-            'ville' => 'string|max:255',
-            'cp_client' => 'integer',
-        ]);
-
-        $profile->update($request->all());
-        return response()->json($profile, 200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        $profile = Profile::find($id);
-
-        if (is_null($profile)) {
-            return response()->json(['message' => 'Profile not found'], 404);
-        }
-
-        $profile->delete();
-        return response()->json(null, 204);
+        return Redirect::to('/');
     }
 }

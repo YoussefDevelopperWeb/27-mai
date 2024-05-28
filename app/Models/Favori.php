@@ -12,4 +12,9 @@ class Favori extends Model
     protected $fillable = [
         'id_produit'
     ];
+
+    public function produit()
+    {
+        return $this->belongsTo(Produit::class, 'id_produit');
+    }
 }

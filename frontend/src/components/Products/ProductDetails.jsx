@@ -108,7 +108,7 @@ const ProductDetails = ({ data }) => {
                       />
                     ) : (
                       <AiOutlineHeart
-                        size={30}
+                        size={35}
                         className="cursor-pointer"
                         onClick={() => setClick(!click)}
                         color={click ? "red" : "#333"}

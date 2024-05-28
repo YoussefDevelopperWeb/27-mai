@@ -12,4 +12,9 @@ class Panier extends Model
     protected $fillable = [
         'id_produit', 'qtt_produit'
     ];
+
+    public function produit()
+    {
+        return $this->belongsTo(Produit::class, 'id_produit');
+    }
 }

@@ -12,4 +12,10 @@ class Feedback extends Model
     protected $fillable = [
         'id_client', 'description_fb', 'evaluation_fb', 'titre_fb'
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'id_client');
+    }
 }
+

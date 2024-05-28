@@ -12,4 +12,9 @@ class Livraison extends Model
     protected $fillable = [
         'id_commande', 'titre_liv', 'methode_liv', 'statut'
     ];
+
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class, 'id_commande');
+    }
 }

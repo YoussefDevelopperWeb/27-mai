@@ -11,5 +11,11 @@ class Categorie extends Model
 
     protected $fillable = [
         "nom_cat",
+        "image", // Adding the image field to the fillable array
     ];
+
+    public function produits()
+    {
+        return $this->hasMany(Produit::class, 'id_cat');
+    }
 }

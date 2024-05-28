@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,4 +11,9 @@ class Facture extends Model
     protected $fillable = [
         'id_commande', 'date_facture', 'nom_facture', 'adresse_facture'
     ];
+
+    public function commande()
+    {
+        return $this->belongsTo(Commande::class, 'id_commande');
+    }
 }

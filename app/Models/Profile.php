@@ -12,4 +12,9 @@ class Profile extends Model
     protected $fillable = [
         'id_client', 'adresse', 'ville', 'cp_client'
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'id_client');
+    }
 }
